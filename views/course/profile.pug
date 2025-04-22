@@ -4,8 +4,38 @@ block content
     h3= course.name
     a(href=`/courses/edit/${course.id}`) Edit Course
     a(href=`/courses/delete/${course.id}`) Delete Course
-
     div
         p Instructor: #{course.instructor_name}
         p Department: #{course.department}
         p= course.description
+    div.students
+        h4 Available Students
+        if availableStudents.length>0
+            form(action=`/courses/${course.id}/enroll` method='post')
+                select(name='student' id='student' autocomplete=off)
+                    each student in availableStudents
+                        option(value= student.id) #{student.first_name}
+                button.button.primary(type='submit') Enroll
+        else
+            p No remaining students are eligible
+
+        h4 Enrolled Students
+        if course.students.length>0
+            table
+                thead
+                    tr
+                        th First
+                        th Last
+                        th Grade
+                        th
+                tbody
+                    each student in course.students
+                        tr
+                            td= student.first_name
+                            td= student.last_name
+                            td= student.grade_level
+                            td
+                                a(href=`/student/profile/${student.id}`) View Student
+                                a(href=`/courses/${student.id}/removeStudents/${course.id}`) Remove Students
+        else
+            p No students are enrolled in this course.

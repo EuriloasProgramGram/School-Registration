@@ -12,10 +12,10 @@ mixin studentForm(student, saveUrl, cancelUrl)
 
             div.form-input
                 label(for='grade_level') Grade
-                select(id='grade_level' name='grade+level')
+                select(id='grade_level' name='grade_level')
                     each grade in [9, 10,11, 12]
                         option(value=grade selected = (grade === student.grade_level)) #{grade}
 
             div.form-buttons
                 a.button(href=cancelUrl) Cancel
-                button.button(type='submit') Save
+                button.button.primary(type='submit') Save

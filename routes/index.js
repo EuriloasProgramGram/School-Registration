@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const courseController = require('../controllers/courseController.js');
 const studentController = require('../controllers/studentController.js');
+const {enrollStudent} = require("../controllers/studentController");
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -22,4 +23,16 @@ router.get('/students/profile/:id', studentController.viewProfile);
 router.get('/students/edit/:id', studentController.renderEditForm);
 router.post('/students/edit/:id', studentController.updateStudent);
 router.get('/students/add', studentController.renderAddForm)
+router.post('/students/add', studentController.addStudent);
+router.get('/students/delete/:id', studentController.deleteStudent);
+
+router.post('/students/:studentId/enroll/', studentController.enrollStudent);
+router.post('/courses/:courseId/enroll/', courseController.enrollStudent);
+router.get('/students/:studentId/removeCourse/:courseId', studentController.removeCourse);
+router.get('/courses/:studentId/removeStudents/:courseId', courseController.removeStudents);
+
+
+
+
+
 module.exports = router;
